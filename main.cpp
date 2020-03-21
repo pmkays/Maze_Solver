@@ -20,10 +20,11 @@ int main(int argc, char** argv) {
     // AS YOU WORK ON MILESTONE 2. YOU CAN UPDATE THEM YOURSELF
     // AS YOU GO ALONG.
     // COMMENT THESE OUT BEFORE YOU SUBMIT!!!
-    std::cout << "TESTING - COMMENT THE OUT TESTING BEFORE YOU SUBMIT!!!" << std::endl;
-    testBreadcrumb();
-    testTrail();
-    std::cout << "DONE TESTING" << std::endl << std::endl;
+
+    // std::cout << "TESTING - COMMENT THE OUT TESTING BEFORE YOU SUBMIT!!!" << std::endl;
+    // testBreadcrumb();
+    // testTrail();
+    // std::cout << "DONE TESTING" << std::endl << std::endl;
 
     // Load Maze from stdin
     Maze maze;
@@ -31,23 +32,46 @@ int main(int argc, char** argv) {
 
     // Solve using MazeSolver
     // THIS WILL ONLY WORK IF YOU'VE FINISHED MILESTONE 2
-    MazeSolver* solver = new MazeSolver();
-    Trail* solution = nullptr;
-    solver->solve(maze);
-    solution = solver->getSolution();
 
-    // Print Maze to stdout
-    printMazeStdout(maze, solution);
+    // MazeSolver* solver = new MazeSolver();
+    // Trail* solution = nullptr;
+    // solver->solve(maze);
+    // solution = solver->getSolution();
 
-    delete solver;
+    // // Print Maze to stdout
+    // printMazeStdout(maze, solution);
+
+    // delete solver;
 
     return EXIT_SUCCESS;
 }
 
-void readMazeStdin(Maze maze) {
+void readMazeStdin(Maze maze) 
+{
     // ASSUME THE MAZE IS A FIXED SIZE (20X20).
+    // std::cout << "Enter maze: "; 
 
-    // TODO
+    while(!std::cin.eof())
+    {
+        for(int i = 0; i < MAZE_DIM ; i++)
+        {
+            for(int j = 0; j < MAZE_DIM; j++)
+            {
+                std::cin >> maze[i][j]; 
+            }
+        }
+    }
+
+    // std::cout << "Printing maze..." << std::endl; 
+    
+    for(int i = 0; i < MAZE_DIM ; i++)
+    {
+        for(int j = 0; j < MAZE_DIM ; j++)
+        {
+            std::cout <<  maze[i][j]; 
+        }
+        std::cout << std::endl; 
+    }
 }
 
 

@@ -1,29 +1,34 @@
 
 #include "Breadcrumb.h"
 
-Breadcrumb::Breadcrumb(int x, int y, bool stale) {
+Breadcrumb::Breadcrumb(int x, int y, bool stale) 
+{
+   this->x = x;
+   this->y = y;
+   this->stale = stale;
+}
+
+Breadcrumb::~Breadcrumb() 
+{
    // TODO
 }
 
-Breadcrumb::~Breadcrumb() {
-   // TODO
+int Breadcrumb::getX() 
+{
+   return this->x;
 }
 
-int Breadcrumb::getX() {
-   // TODO
-   return 0;
+int Breadcrumb::getY() 
+{
+   return this->y;
 }
 
-int Breadcrumb::getY() {
-   // TODO
-   return 0;
+bool Breadcrumb::isStale() 
+{
+   return this->stale;
 }
 
-bool Breadcrumb::isStale() {
-   // TODO
-   return false;
-}
-
-void Breadcrumb::setStale(bool stale) {
-   // TODO
+void Breadcrumb::setStale(bool stale) 
+{
+   this->stale = stale;
 }
