@@ -33,9 +33,9 @@ int main(int argc, char** argv) {
     // Solve using MazeSolver
     // THIS WILL ONLY WORK IF YOU'VE FINISHED MILESTONE 2
 
-    // MazeSolver* solver = new MazeSolver();
+    MazeSolver* solver = new MazeSolver();
     // Trail* solution = nullptr;
-    // solver->solve(maze);
+    solver->solve(maze);
     // solution = solver->getSolution();
 
     // // Print Maze to stdout
@@ -64,14 +64,14 @@ void readMazeStdin(Maze maze)
 
     // std::cout << "Printing maze..." << std::endl; 
     
-    for(int i = 0; i < MAZE_DIM ; i++)
-    {
-        for(int j = 0; j < MAZE_DIM ; j++)
-        {
-            std::cout <<  maze[i][j]; 
-        }
-        std::cout << std::endl; 
-    }
+    // for(int i = 0; i < MAZE_DIM ; i++)
+    // {
+    //     for(int j = 0; j < MAZE_DIM ; j++)
+    //     {
+    //         std::cout <<  maze[i][j]; 
+    //     }
+    //     std::cout << std::endl; 
+    // }
 }
 
 

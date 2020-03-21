@@ -27,7 +27,7 @@ public:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
-
+   void findCoordinates(Maze maze, char letter, int* coordinatesPtr);
 private:
 
    /*                                           */
@@ -41,6 +41,8 @@ private:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
+   int coordinates[2];
+   int* coordinatesPtr;
 };
 
 #endif // COSC_ASS_ONE_PARTICLE_FILTER

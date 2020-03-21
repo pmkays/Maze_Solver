@@ -15,17 +15,17 @@ Breadcrumb::~Breadcrumb()
 
 int Breadcrumb::getX() 
 {
-   return this->x;
+   return x;
 }
 
 int Breadcrumb::getY() 
 {
-   return this->y;
+   return y;
 }
 
 bool Breadcrumb::isStale() 
 {
-   return this->stale;
+   return stale;
 }
 
 void Breadcrumb::setStale(bool stale) 
