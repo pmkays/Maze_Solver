@@ -91,29 +91,12 @@ void MazeSolver::solve(Maze maze)
       }
       else
       {
-         int endOfTrail = solution->size() - 1;
-         std::cout << endOfTrail << std::endl;
+         //prints 5
+         int endOfTrail = solution->size();
+         backTrack(endOfTrail, maze, x, y);
 
-         //setting this most recent breadcrumb as stale
-         solution->getPtr(endOfTrail)->setStale(true);
-         
-         int crumbBefore = endOfTrail - 1;
-
-         std::cout << crumbBefore << std::endl;
-
-         std::cout<< "Is crumb before stale:" << solution->getPtr(crumbBefore)->isStale() << std::endl;
-         std::cout<< "X coor of crumb before stale:" << solution->getPtr(crumbBefore)->getX() << std::endl;
-         std::cout<< "Y coor of crumb before stale:" << solution->getPtr(crumbBefore)->getY() << std::endl;
-
-         // check for the most recent good breadcrumb
-         if(!solution->getPtr(crumbBefore)->isStale())
-         {
-            std::cout << "Made it past check condition " << endOfTrail << std::endl;
-            //go to most recent good breadcrumb
-            x = solution->getPtr(crumbBefore)->getX(); 
-            y = solution->getPtr(crumbBefore)->getY(); 
-            std::cout << "Made it past check condition " << endOfTrail << std::endl;
-         } 
+         // backTrack2(x, y); 
+ 
       }
 
       std::cout << "Current position"<< std::endl;
@@ -151,4 +134,58 @@ void MazeSolver::findCoordinates(Maze maze, char letter, int* coordinatesPtr)
             }
         }
     }
+}
+
+void MazeSolver::backTrack2(int& x, int& y)
+{
+   Breadcrumb* freshCrumb = nullptr;
+   for(int i = solution->size() - 1; i > 0; i--)
+   {
+      if(!solution->getPtr(i)->isStale())
+      {
+         //most recent unstale crumb is retrieved
+         solution->getPtr(i)->setStale(true);
+         x = freshCrumb->getX();
+         y = freshCrumb->getY(); 
+         break;
+      }
+   }
+
+
+}
+
+void MazeSolver::backTrack(int length, Maze maze, int& x, int& y)
+{
+   //setting this most recent breadcrumb as stale
+   // check for the most recent good breadcrumb
+      
+   length--; 
+   if(!solution->getPtr(length)->isStale())
+   {
+      solution->getPtr(length)->setStale(true);   
+      //go to most recent good breadcrumb
+      x = solution->getPtr(length)->getX(); 
+      y = solution->getPtr(length)->getY();
+
+      // bool proceedNorth = ((NORTH_MAZE == OPEN) && (!solution->containsStale(x, NORTH_COOR) || solution->contains(x, NORTH_COOR)));
+      // bool proceedEast = ((EAST_MAZE == OPEN) && (!solution->containsStale(EAST_COOR, y) || solution->contains(EAST_COOR, y)));
+      // bool proceedWest = ((SOUTH_MAZE == OPEN) && (!solution->containsStale(x, SOUTH_COOR) || solution->contains(x, SOUTH_COOR)));
+      // bool proceedSouth = ((WEST_MAZE == OPEN) && (!solution->containsStale(WEST_COOR, y) || solution->contains(WEST_COOR, y)));
+      
+      // if(proceedNorth || proceedEast || proceedWest || proceedSouth)
+      // {
+      //    solution->getPtr(length)->setStale(true);   
+      // }
+      // if(!solution->containsStale(x, NORTH_COOR) || !solution->containsStale(EAST_COOR, y) || !solution->containsStale(x, SOUTH_COOR) || !solution->containsStale(WEST_COOR, y))
+      // {
+         // solution->getPtr(length)->setStale(true);
+      // }
+      
+   }
+   else
+   {
+      std::cout<< "Else hit" << length << std::endl;
+      MazeSolver::backTrack(length, maze, x, y);
+   }  
+   
 }

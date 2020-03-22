@@ -27,6 +27,9 @@ public:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
+
+   void backTrack(int length, Maze maze, int& x, int& y);
+   void backTrack2(int& x, int& y);
    void findCoordinates(Maze maze, char letter, int* coordinatesPtr);
 private:
 
