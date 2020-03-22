@@ -91,19 +91,13 @@ void MazeSolver::solve(Maze maze)
       }
       else
       {
-         //prints 5
-         int endOfTrail = solution->size();
-         backTrack(endOfTrail, maze, x, y);
-
-         // backTrack2(x, y); 
- 
+         backTrack(solution->size(), x, y);
       }
 
       std::cout << "Current position"<< std::endl;
       std::cout << x << std::endl;
       std::cout << y << std::endl;
 
-      
       if(x == endX && y == endY)
       {
          keepLooping = false;
@@ -136,56 +130,24 @@ void MazeSolver::findCoordinates(Maze maze, char letter, int* coordinatesPtr)
     }
 }
 
-void MazeSolver::backTrack2(int& x, int& y)
-{
-   Breadcrumb* freshCrumb = nullptr;
-   for(int i = solution->size() - 1; i > 0; i--)
-   {
-      if(!solution->getPtr(i)->isStale())
-      {
-         //most recent unstale crumb is retrieved
-         solution->getPtr(i)->setStale(true);
-         x = freshCrumb->getX();
-         y = freshCrumb->getY(); 
-         break;
-      }
-   }
-
-
-}
-
-void MazeSolver::backTrack(int length, Maze maze, int& x, int& y)
+void MazeSolver::backTrack(int length, int& x, int& y)
 {
    //setting this most recent breadcrumb as stale
    // check for the most recent good breadcrumb
-      
    length--; 
    if(!solution->getPtr(length)->isStale())
    {
       solution->getPtr(length)->setStale(true);   
-      //go to most recent good breadcrumb
-      x = solution->getPtr(length)->getX(); 
-      y = solution->getPtr(length)->getY();
-
-      // bool proceedNorth = ((NORTH_MAZE == OPEN) && (!solution->containsStale(x, NORTH_COOR) || solution->contains(x, NORTH_COOR)));
-      // bool proceedEast = ((EAST_MAZE == OPEN) && (!solution->containsStale(EAST_COOR, y) || solution->contains(EAST_COOR, y)));
-      // bool proceedWest = ((SOUTH_MAZE == OPEN) && (!solution->containsStale(x, SOUTH_COOR) || solution->contains(x, SOUTH_COOR)));
-      // bool proceedSouth = ((WEST_MAZE == OPEN) && (!solution->containsStale(WEST_COOR, y) || solution->contains(WEST_COOR, y)));
-      
-      // if(proceedNorth || proceedEast || proceedWest || proceedSouth)
-      // {
-      //    solution->getPtr(length)->setStale(true);   
-      // }
-      // if(!solution->containsStale(x, NORTH_COOR) || !solution->containsStale(EAST_COOR, y) || !solution->containsStale(x, SOUTH_COOR) || !solution->containsStale(WEST_COOR, y))
-      // {
-         // solution->getPtr(length)->setStale(true);
-      // }
-      
+      if(solution->getPtr(length)->isStale())
+      {
+         //go to most recent good breadcrumb
+         x = solution->getPtr(length - 1)->getX(); 
+         y = solution->getPtr(length - 1)->getY();
+      }    
    }
    else
    {
-      std::cout<< "Else hit" << length << std::endl;
-      MazeSolver::backTrack(length, maze, x, y);
+      MazeSolver::backTrack(length, x, y);
    }  
    
 }
