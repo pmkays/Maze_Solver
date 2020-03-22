@@ -69,7 +69,7 @@ void printMazeStdout(Maze maze, Trail* solution)
     {
         for(int x = 0; x <MAZE_DIM; x++)
         {
-            if(solution->contains(x, y))
+            if(solution->contains(x, y) && !solution->containsStale(x,y) && maze[y][x] != 'S')
             {
                 maze[y][x] = '*'; 
             }

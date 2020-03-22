@@ -59,40 +59,62 @@ void MazeSolver::solve(Maze maze)
    
    bool keepLooping = true; 
 
-   int iterateCount = 0; 
    while(keepLooping)
    {
-      if(!solution->contains(x,y) && iterateCount != 0)
+      //if we are on starting position, don't put breadcrumb there
+      if(!solution->contains(x,y))
       {
          //set breadcrumb at each new position
          Breadcrumb* breadcrumb = new Breadcrumb(x, y, false);
          solution->addCopy(breadcrumb);
       }
 
-      if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == 'E') && !solution->contains(x,NORTH_COOR))
+      if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == END) && !solution->contains(x,NORTH_COOR))
       {
          std::cout << "North" << std::endl; 
          y--;
       }
-      else if(x < 20 && (EAST_MAZE == OPEN || EAST_MAZE == 'E') && !solution->contains(EAST_COOR,y))
+      else if(x < 20 && (EAST_MAZE == OPEN || EAST_MAZE == END) && !solution->contains(EAST_COOR,y))
       {
          std::cout << "East" << std::endl;
          x++;
       }
-      else if(y < 20 && (SOUTH_MAZE == OPEN || SOUTH_MAZE == 'E') && !solution->contains(x,SOUTH_COOR))
+      else if(y < 20 && (SOUTH_MAZE == OPEN || SOUTH_MAZE == END) && !solution->contains(x,SOUTH_COOR))
       {
          std::cout << "South" << std::endl;
          y++;
       }
-      else if(x > 0 && (WEST_MAZE == OPEN || WEST_MAZE == 'E') && !solution->contains(WEST_COOR,y))
+      else if(x > 0 && (WEST_MAZE == OPEN || WEST_MAZE == END) && !solution->contains(WEST_COOR,y))
       {
          std::cout << "West" << std::endl;
          x--;
       }
-      // else
-      // {
-      //    solution->getPtr(solution->size())->setStale(true);
-      // }
+      else
+      {
+         int endOfTrail = solution->size() - 1;
+         std::cout << endOfTrail << std::endl;
+
+         //setting this most recent breadcrumb as stale
+         solution->getPtr(endOfTrail)->setStale(true);
+         
+         int crumbBefore = endOfTrail - 1;
+
+         std::cout << crumbBefore << std::endl;
+
+         std::cout<< "Is crumb before stale:" << solution->getPtr(crumbBefore)->isStale() << std::endl;
+         std::cout<< "X coor of crumb before stale:" << solution->getPtr(crumbBefore)->getX() << std::endl;
+         std::cout<< "Y coor of crumb before stale:" << solution->getPtr(crumbBefore)->getY() << std::endl;
+
+         // check for the most recent good breadcrumb
+         if(!solution->getPtr(crumbBefore)->isStale())
+         {
+            std::cout << "Made it past check condition " << endOfTrail << std::endl;
+            //go to most recent good breadcrumb
+            x = solution->getPtr(crumbBefore)->getX(); 
+            y = solution->getPtr(crumbBefore)->getY(); 
+            std::cout << "Made it past check condition " << endOfTrail << std::endl;
+         } 
+      }
 
       std::cout << "Current position"<< std::endl;
       std::cout << x << std::endl;
@@ -103,14 +125,11 @@ void MazeSolver::solve(Maze maze)
       {
          keepLooping = false;
       }
-
-      iterateCount++;
    }
 }
 
 Trail* MazeSolver::getSolution() 
 {
-   std::cout <<solution->size() << std::endl;
    for(int i = 0; i < solution->size(); i++)
    {
       Breadcrumb* copyCrumb = solution->getPtr(i);

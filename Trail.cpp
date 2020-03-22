@@ -46,3 +46,16 @@ bool Trail::contains(int x, int y)
    }
    return success;
 }
+
+bool Trail::containsStale(int x, int y) 
+{
+   bool success = false;
+   for(int i = 0; i < length; i++)
+   {
+      if(breadcrumbs[i]->getX() == x && breadcrumbs[i]->getY() == y && breadcrumbs[i]->isStale())
+      {
+         success = true;
+      }
+   }
+   return success;
+}
