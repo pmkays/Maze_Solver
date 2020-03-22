@@ -34,23 +34,21 @@ int main(int argc, char** argv) {
     // THIS WILL ONLY WORK IF YOU'VE FINISHED MILESTONE 2
 
     MazeSolver* solver = new MazeSolver();
-    // Trail* solution = nullptr;
+    Trail* solution = nullptr;
     solver->solve(maze);
-    // solution = solver->getSolution();
+    solution = solver->getSolution();
 
-    // // Print Maze to stdout
-    // printMazeStdout(maze, solution);
+    // Print Maze to stdout
+    printMazeStdout(maze, solution);
 
-    // delete solver;
-
+    delete solver;
+    
     return EXIT_SUCCESS;
 }
 
 void readMazeStdin(Maze maze) 
 {
     // ASSUME THE MAZE IS A FIXED SIZE (20X20).
-    // std::cout << "Enter maze: "; 
-
     while(!std::cin.eof())
     {
         for(int i = 0; i < MAZE_DIM ; i++)
@@ -61,23 +59,31 @@ void readMazeStdin(Maze maze)
             }
         }
     }
-
-    // std::cout << "Printing maze..." << std::endl; 
-    
-    // for(int i = 0; i < MAZE_DIM ; i++)
-    // {
-    //     for(int j = 0; j < MAZE_DIM ; j++)
-    //     {
-    //         std::cout <<  maze[i][j]; 
-    //     }
-    //     std::cout << std::endl; 
-    // }
+      
 }
 
 
-void printMazeStdout(Maze maze, Trail* solution) {
-    // TODO
-    std::cout << "TODO" << std::endl;
+void printMazeStdout(Maze maze, Trail* solution) 
+{
+    for(int y = 0; y < MAZE_DIM; y++)
+    {
+        for(int x = 0; x <MAZE_DIM; x++)
+        {
+            if(solution->contains(x, y))
+            {
+                maze[y][x] = '*'; 
+            }
+        }
+    }
+
+    for(int y = 0; y < MAZE_DIM ; y++)
+    {
+        for(int x = 0; x < MAZE_DIM ; x++)
+        {
+            std::cout <<  maze[y][x]; 
+        }
+        std::cout << std::endl; 
+    }
 }
 
 void testBreadcrumb() {

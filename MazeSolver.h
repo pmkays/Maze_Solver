@@ -43,6 +43,8 @@ private:
    /*                                           */
    int coordinates[2];
    int* coordinatesPtr;
+
+   Trail* copySolution;
 };
 
 #endif // COSC_ASS_ONE_PARTICLE_FILTER

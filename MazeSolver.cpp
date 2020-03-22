@@ -11,13 +11,13 @@ MazeSolver::MazeSolver()
    coordinates[2] = {};
    coordinatesPtr = coordinates;
    solution = new Trail();
+   copySolution = new Trail();
 }
 
 MazeSolver::~MazeSolver() 
 {
    delete solution;
-
-   //delete breadcrumbs?
+   delete copySolution; 
 }
 
 #define NORTH_COOR     y - 1
@@ -59,35 +59,16 @@ void MazeSolver::solve(Maze maze)
    
    bool keepLooping = true; 
 
+   int iterateCount = 0; 
    while(keepLooping)
    {
-      if(!solution->contains(x,y))
+      if(!solution->contains(x,y) && iterateCount != 0)
       {
          //set breadcrumb at each new position
          Breadcrumb* breadcrumb = new Breadcrumb(x, y, false);
          solution->addCopy(breadcrumb);
       }
 
-      // if(y > 0 && (maze[north][x] == OPEN || maze[north][x] == 'E') && !solution->contains(x,north))
-      // {
-      //    std::cout << "North" << std::endl; 
-      //    y--;
-      // }
-      // else if(x < 20 && (maze[y][east] == OPEN || maze[y][east] == 'E') && !solution->contains(east,y))
-      // {
-      //    std::cout << "East" << std::endl;
-      //    x++;
-      // }
-      // else if(y < 20 && (maze[south][x] == OPEN || maze[y][south] == 'E') && !solution->contains(x,south))
-      // {
-      //    std::cout << "South" << std::endl;
-      //    y++;
-      // }
-      // else if(x > 0 && (maze[y][west] == OPEN || maze[y][west] == 'E') && !solution->contains(west,y))
-      // {
-      //    std::cout << "West" << std::endl;
-      //    x--;
-      // }
       if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == 'E') && !solution->contains(x,NORTH_COOR))
       {
          std::cout << "North" << std::endl; 
@@ -122,12 +103,20 @@ void MazeSolver::solve(Maze maze)
       {
          keepLooping = false;
       }
+
+      iterateCount++;
    }
 }
 
-Trail* MazeSolver::getSolution() {
-   // TODO
-   return nullptr;
+Trail* MazeSolver::getSolution() 
+{
+   std::cout <<solution->size() << std::endl;
+   for(int i = 0; i < solution->size(); i++)
+   {
+      Breadcrumb* copyCrumb = solution->getPtr(i);
+      copySolution->addCopy(copyCrumb);
+   }
+   return copySolution;
 }
 
 void MazeSolver::findCoordinates(Maze maze, char letter, int* coordinatesPtr)

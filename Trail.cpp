@@ -10,7 +10,7 @@ Trail::~Trail()
 {
    for(int i = 0; i < TRAIL_ARRAY_MAX_SIZE ; i++)
    {
-      if(breadcrumbs[i]!=nullptr)
+      if(breadcrumbs[i] != nullptr)
       {
          delete breadcrumbs[i];
          breadcrumbs[i] = nullptr;
