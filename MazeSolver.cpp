@@ -55,13 +55,13 @@ void MazeSolver::solve(Maze maze)
    int y = startY;
    int x = startX; 
 
-   std::cout << "Start coordinates"<< std::endl;
-   std::cout << startX << std::endl;
-   std::cout << startY << std::endl;
+   // std::cout << "Start coordinates"<< std::endl;
+   // std::cout << startX << std::endl;
+   // std::cout << startY << std::endl;
 
-   std::cout << "End coordinates"<< std::endl;
-   std::cout << endX << std::endl;
-   std::cout << endY << std::endl;
+   // std::cout << "End coordinates"<< std::endl;
+   // std::cout << endX << std::endl;
+   // std::cout << endY << std::endl;
    
    bool keepLooping = true; 
 
@@ -101,10 +101,10 @@ void MazeSolver::solve(Maze maze)
 
       }
 
-      std::cout << "Current position"<< std::endl;
-      std::cout << x << std::endl;
-      std::cout << y << std::endl;
-      std::cout << "---_-" << std::endl;
+      // std::cout << "Current position"<< std::endl;
+      // std::cout << x << std::endl;
+      // std::cout << y << std::endl;
+      // std::cout << "---_-" << std::endl;
 
       if(x == endX && y == endY)
       {
@@ -154,10 +154,10 @@ void MazeSolver::backTrack(int length, int& x, int& y, int startX, int startY)
 {
    length--;
 
-   std::cout << "Length: " << length << std::endl;
-   std::cout << "Breadcrumb x: " << solution->getPtr(length)->getX() << std::endl;
-   std::cout << "Breadcrumb x: " << solution->getPtr(length)->getY() << std::endl;
-   std::cout << "Is breadcrumb stale? " << solution->getPtr(length)->isStale() << std::endl;
+   // std::cout << "Length: " << length << std::endl;
+   // std::cout << "Breadcrumb x: " << solution->getPtr(length)->getX() << std::endl;
+   // std::cout << "Breadcrumb x: " << solution->getPtr(length)->getY() << std::endl;
+   // std::cout << "Is breadcrumb stale? " << solution->getPtr(length)->isStale() << std::endl;
 
 
 
@@ -170,8 +170,8 @@ void MazeSolver::backTrack(int length, int& x, int& y, int startX, int startY)
          solution->getPtr(length)->setStale(true);
       }
 
-      std::cout << "x: " << x << std::endl;
-      std::cout << "y: " << y << std::endl;
+      // std::cout << "x: " << x << std::endl;
+      // std::cout << "y: " << y << std::endl;
       if(length > 0)
       {
          //reduce the directionsSize by 2 so it can be overridden with the next move
