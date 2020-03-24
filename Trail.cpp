@@ -16,6 +16,7 @@ Trail::~Trail()
          breadcrumbs[i] = nullptr;
       }
    }
+   delete[] breadcrumbs;
 }
 
 int Trail::size() 

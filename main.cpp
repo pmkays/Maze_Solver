@@ -15,6 +15,8 @@ void readMazeStdin(Maze maze);
 // Print out a Maze to standard output.
 void printMazeStdout(Maze maze, Trail* solution);
 
+void printDirections(std::string* directions, int directionsSize);
+
 int main(int argc, char** argv) {
     // THESE ARE SOME EXAMPLE FUNCTIONS TO HELP TEST YOUR CODE
     // AS YOU WORK ON MILESTONE 2. YOU CAN UPDATE THEM YOURSELF
@@ -35,11 +37,18 @@ int main(int argc, char** argv) {
 
     MazeSolver* solver = new MazeSolver();
     Trail* solution = nullptr;
+    std::string* directions = nullptr;
+    int directionsSize = 0; 
+
     solver->solve(maze);
     solution = solver->getSolution();
+    directions = solver->getDirections();
+    directionsSize = solver->getDirectionsSize();
 
     // Print Maze to stdout
     printMazeStdout(maze, solution);
+
+    printDirections(directions, directionsSize);
 
     delete solver;
     
@@ -58,10 +67,8 @@ void readMazeStdin(Maze maze)
                 std::cin >> maze[i][j]; 
             }
         }
-    }
-      
+    }     
 }
-
 
 void printMazeStdout(Maze maze, Trail* solution) 
 {
@@ -83,6 +90,14 @@ void printMazeStdout(Maze maze, Trail* solution)
             std::cout <<  maze[y][x]; 
         }
         std::cout << std::endl; 
+    }
+}
+
+void printDirections(std::string* directions, int directionsSize)
+{
+    for(int i = 0; i < directionsSize; i++)
+    {
+        std::cout<< directions[i] << std::endl;
     }
 }
 

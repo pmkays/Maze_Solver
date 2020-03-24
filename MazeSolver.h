@@ -28,8 +28,13 @@ public:
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
 
+   void backTrack(int length, int& x, int& y, int& directionsCount);
    void backTrack(int length, int& x, int& y);
    void findCoordinates(Maze maze, char letter, int* coordinatesPtr);
+
+   int getDirectionsSize();
+
+   std::string* getDirections();
 private:
 
    /*                                           */
@@ -45,8 +50,9 @@ private:
    /*                                           */
    int coordinates[2];
    int* coordinatesPtr;
-
    Trail* copySolution;
+   std::string* directions;
+   int directionsSize;
 };
 
 #endif // COSC_ASS_ONE_PARTICLE_FILTER

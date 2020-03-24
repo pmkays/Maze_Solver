@@ -4,22 +4,6 @@
 
 #include "MazeSolver.h"
 
-
-
-MazeSolver::MazeSolver() 
-{
-   coordinates[2] = {};
-   coordinatesPtr = coordinates;
-   solution = new Trail();
-   copySolution = new Trail();
-}
-
-MazeSolver::~MazeSolver() 
-{
-   delete solution;
-   delete copySolution; 
-}
-
 #define NORTH_COOR     y - 1
 #define EAST_COOR      x + 1
 #define SOUTH_COOR     y + 1
@@ -36,23 +20,37 @@ MazeSolver::~MazeSolver()
 #define Y_COOR_ARRAY          0
 #define X_COOR_ARRAY          1
 
+MazeSolver::MazeSolver() 
+{
+   coordinates[2] = {};
+   coordinatesPtr = coordinates;
+   solution = new Trail();
+   copySolution = new Trail();
+   directions = new std::string[TRAIL_ARRAY_MAX_SIZE];
+   directionsSize = 0; 
+}
+
+MazeSolver::~MazeSolver() 
+{
+   delete solution;
+   delete copySolution; 
+   delete[] directions;
+}
+
 void MazeSolver::solve(Maze maze) 
 {
+   std::string north = "North";
+   std::string east = "East";
+   std::string south = "South";
+   std::string west = "West";
+   
    findCoordinates(maze, START, coordinatesPtr);
    int startY = coordinatesPtr[Y_COOR_ARRAY];
    int startX = coordinatesPtr[X_COOR_ARRAY];
 
-   std::cout << "Start coordinates"<< std::endl;
-   std::cout << startX << std::endl;
-   std::cout << startY << std::endl;
-
    findCoordinates(maze, END, coordinatesPtr);
    int endY = coordinatesPtr[Y_COOR_ARRAY];
    int endX = coordinatesPtr[X_COOR_ARRAY];
-
-   std::cout << "End coordinates"<< std::endl;
-   std::cout << endX << std::endl;
-   std::cout << endY << std::endl;
 
    int y = startY;
    int x = startX; 
@@ -61,7 +59,7 @@ void MazeSolver::solve(Maze maze)
 
    while(keepLooping)
    {
-      //if we are on starting position, don't put breadcrumb there
+      //if there isn't a breadcrumb in this position
       if(!solution->contains(x,y))
       {
          //set breadcrumb at each new position
@@ -71,37 +69,36 @@ void MazeSolver::solve(Maze maze)
 
       if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == END) && !solution->contains(x,NORTH_COOR))
       {
-         std::cout << "North" << std::endl; 
          y--;
+         directions[directionsSize] = north;
       }
       else if(x < 20 && (EAST_MAZE == OPEN || EAST_MAZE == END) && !solution->contains(EAST_COOR,y))
       {
-         std::cout << "East" << std::endl;
          x++;
+         directions[directionsSize] = east;
       }
       else if(y < 20 && (SOUTH_MAZE == OPEN || SOUTH_MAZE == END) && !solution->contains(x,SOUTH_COOR))
       {
-         std::cout << "South" << std::endl;
          y++;
+         directions[directionsSize] = south;
       }
       else if(x > 0 && (WEST_MAZE == OPEN || WEST_MAZE == END) && !solution->contains(WEST_COOR,y))
       {
-         std::cout << "West" << std::endl;
          x--;
+         directions[directionsSize] = west;
       }
       else
       {
          backTrack(solution->size(), x, y);
-      }
 
-      std::cout << "Current position"<< std::endl;
-      std::cout << x << std::endl;
-      std::cout << y << std::endl;
+      }
 
       if(x == endX && y == endY)
       {
          keepLooping = false;
       }
+
+      directionsSize++;
    }
 }
 
@@ -115,16 +112,26 @@ Trail* MazeSolver::getSolution()
    return copySolution;
 }
 
+std::string* MazeSolver::getDirections()
+{
+   return directions;
+}
+
+int MazeSolver::getDirectionsSize()
+{
+   return directionsSize;
+}
+
 void MazeSolver::findCoordinates(Maze maze, char letter, int* coordinatesPtr)
 {
-    for(int rows = 0; rows < MAZE_DIM; rows++)
+    for(int y = 0; y < MAZE_DIM; y++)
     {
-        for(int cols = 0; cols < MAZE_DIM; cols++)
+        for(int x = 0; x < MAZE_DIM; x++)
         {
-            if(maze[rows][cols] == letter)
+            if(maze[y][x] == letter)
             {
-                coordinatesPtr[Y_COOR_ARRAY] = rows;
-                coordinatesPtr[X_COOR_ARRAY] = cols; 
+                coordinatesPtr[Y_COOR_ARRAY] = y;
+                coordinatesPtr[X_COOR_ARRAY] = x; 
             }
         }
     }
@@ -132,14 +139,22 @@ void MazeSolver::findCoordinates(Maze maze, char letter, int* coordinatesPtr)
 
 void MazeSolver::backTrack(int length, int& x, int& y)
 {
-   //setting this most recent breadcrumb as stale
-   // check for the most recent good breadcrumb
+   //go back to the index of the very last breadcrumb
    length--; 
+
+   // check for the most recent good breadcrumb
    if(!solution->getPtr(length)->isStale())
    {
-      solution->getPtr(length)->setStale(true);   
-      if(solution->getPtr(length)->isStale())
+      //make current breadcrumb stale
+      solution->getPtr(length)->setStale(true);
+
+      //check if the next breadcrumb is stale before going to it
+      if(!solution->getPtr(length-1)->isStale())
       {
+         //reduce the directionsSize by 2 so it can be overridden with the next move
+         //reduce by 2 because it will increase by 1 again when it returns to the main function call
+         directionsSize-=2; 
+
          //go to most recent good breadcrumb
          x = solution->getPtr(length - 1)->getX(); 
          y = solution->getPtr(length - 1)->getY();
@@ -147,6 +162,7 @@ void MazeSolver::backTrack(int length, int& x, int& y)
    }
    else
    {
+      //keep recursively calling the function until the last good breadcrumb is found
       MazeSolver::backTrack(length, x, y);
    }  
    
