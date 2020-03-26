@@ -4,7 +4,10 @@
 Trail::Trail() 
 {
    length = 0; 
-   breadcrumbs[TRAIL_ARRAY_MAX_SIZE] = {}; 
+   for(int i = 0; i <TRAIL_ARRAY_MAX_SIZE; i++)
+   {
+      breadcrumbs[i] = nullptr;
+   }
 }
 Trail::~Trail() 
 {
@@ -16,7 +19,6 @@ Trail::~Trail()
          breadcrumbs[i] = nullptr;
       }
    }
-   delete[] breadcrumbs;
 }
 
 int Trail::size() 

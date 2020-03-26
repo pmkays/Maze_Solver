@@ -75,7 +75,7 @@ void MazeSolver::solve(Maze maze)
          solution->addCopy(breadcrumb);
       }
 
-      if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == END || NORTH_MAZE == START) && !solution->contains(x,NORTH_COOR))
+      if(y > 0 && (NORTH_MAZE == OPEN || NORTH_MAZE == END) && !solution->contains(x,NORTH_COOR))
       {
          y--;
          directions[directionsSize] = north;
