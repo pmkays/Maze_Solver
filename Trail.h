@@ -15,6 +15,7 @@ public:
 
    // Constructor/Desctructor.
    Trail();
+   Trail(Trail& other);
    ~Trail();
 
    // Number of elements in the Trail
@@ -33,7 +34,9 @@ public:
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
 
+   //checks if the breadcrumb is stale in this location
    bool containsStale(int x, int y);
+   
 private:
    /*                                           */
    /* DO NOT MOFIFY ANY CODE IN THIS SECTION    */

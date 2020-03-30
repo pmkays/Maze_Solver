@@ -9,6 +9,17 @@ Trail::Trail()
       breadcrumbs[i] = nullptr;
    }
 }
+
+Trail::Trail(Trail& other)
+{
+   //provides a deep copy of trail
+   length = other.length;
+   for(int i = 0; i < other.length; i++)
+   {
+      breadcrumbs[i] = new Breadcrumb(*other.breadcrumbs[i]);
+   }
+}
+
 Trail::~Trail() 
 {
    for(int i = 0; i < TRAIL_ARRAY_MAX_SIZE ; i++)
@@ -33,7 +44,9 @@ Breadcrumb* Trail::getPtr(int i)
 
 void Trail::addCopy(Breadcrumb* t) 
 {
-   breadcrumbs[length] = t;
+   //enters a copy breadcrumb in trail
+   Breadcrumb* copy = new Breadcrumb(*t);
+   breadcrumbs[length] = copy;
    length++;
 }
 

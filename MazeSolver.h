@@ -27,12 +27,19 @@ public:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
+
+   //backtracks if there is a deadend
    void backTrack(int length, int& x, int& y, int startX, int startY);
+
+   //used to locate start/end points
    void findCoordinates(Maze maze, char letter, int* coordinatesPtr);
 
+   //number of directions in array
    int getDirectionsSize();
 
+   //returns directions array for main
    std::string* getDirections();
+
 private:
 
    /*                                           */
@@ -46,10 +53,17 @@ private:
    /*                                           */
    /* YOU MAY ADD YOUR MODIFICATIONS HERE       */
    /*                                           */
+   
+   //keep x and y coordinates together
    int coordinates[2];
-   int* coordinatesPtr;
+   
+   //copy trail to get deep copy
    Trail* copySolution;
+
+   //represents the directions taken to get out of maze
    std::string* directions;
+
+   //how many directions have been stored
    int directionsSize;
 };
 

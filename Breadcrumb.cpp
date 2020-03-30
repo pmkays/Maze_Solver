@@ -8,6 +8,13 @@ Breadcrumb::Breadcrumb(int x, int y, bool stale)
    this->stale = stale;
 }
 
+Breadcrumb::Breadcrumb(Breadcrumb& other)
+{
+   this->x = other.x;
+   this->y = other.y;
+   this->stale = other.stale;
+}
+
 Breadcrumb::~Breadcrumb() 
 {
    // TODO

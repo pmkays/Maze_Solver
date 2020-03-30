@@ -1,3 +1,24 @@
+/*
+*   ANALYSIS - s3782041 - Paula Kurniawan
+*
+*   Approach:    When implementing, I made sure to follow specifications slowly and divide the assignment into sub-problems
+*                that I tackled one by one. E.g. breaking apart the algorithm. I started off with implementing the
+*                Breadcrumb and Trail classes before working on Mazesolver and used the already given tests in Main to help.
+*                I then created my own tests and from there just worked on the program little by little as we learnt more about
+*                C++ features weekly.
+*   Issues:      I had some trouble implementing the backtracking algorithm, as I originally made an error when travelling to the
+*                next breadcrumb which lead to the output of my maze to be incorrect. I also wasn't sure what a deep copy or adding
+*                a copy meant initially which caused confusion.                
+*   Choices:     When making objects, I usually made them as pointers stored on the heap because it provided greater flexibility. For
+*                changing primitives, e.g. coordinates between methods, I usually passed by reference as that was personally easier for me.
+*   Efficiency:  I think overall the efficiency of my program is not the worst but also not the best. Because the maze array has fixed
+*                dimensions, the trail and directions (milestone3) are always set to have a max of 400 elements which means that a lot
+*                of memory is allocated for these arrays. It would be better if we had some sort of dynamic data structure instead.
+*   Milestone 3: I implemented milestones 1, 2 and 3. I completed milestone 3 by utilising an array of strings and then also returning
+*                this in the main and then printing it to display the direcitons. The directions are added/removed in accordance 
+*                to the direction conditionals and backtrack method in MazeSolver.
+*
+*/
 
 #include <iostream>
 #include <string>
